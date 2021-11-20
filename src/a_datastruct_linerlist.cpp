@@ -2,7 +2,6 @@
 // Created by jinfeng hu on 2021/11/18.
 //
 
-#include "aaa_d_linerlist.h"
 /*
 Project: sequence_list(数据结构-顺序表)
 Date:    2018/09/12  20191012修改 添加Reverse  20200819修改 添加ClearList
@@ -264,6 +263,29 @@ void Search(SqList L)
         printf("未找到该元素！\n");
 }
 
+bool Cycleleft(SqList &l,int p){
+    if(p<0||p>l.length)return false;
+    ElemType* s = new ElemType[p];//动态创建辅助数组s
+    for(int i=0;i<p;i++){
+        s[i]=l.data[i];
+    }
+    for(int i =p;i<l.length;i++){//后p个元素依次左移p个位置
+        l.data[i-p] = l.data[i];
+    }
+    for(int i = 0;i<p;i++){//s中元素放在后面
+        l.data[i+l.length-p] = s[i];
+    }
+    return true;
+}
+//2010真题 左移功能实现函数 调用Cycletoleft与printlist
+void Cycletoleft(SqList &l){
+    int p;bool flag;
+    printf("请输入要左移多少个(p>0):\n");
+    scanf("%d",&p);
+    flag = Cycleleft(l,p);
+    if(flag)PrintList(l);
+    else printf("左移个数非法！！！\n");
+}
 
 
 //菜单
@@ -295,6 +317,7 @@ int main()
             case 6:SplitSort(L); break;
             case 7:PrintList(L); break;
             case 8:ClearList(L); break;
+            case 9:Cycletoleft(L); break;
             default:printf("输入错误！！！\n");
         }
     }
