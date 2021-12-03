@@ -52,6 +52,16 @@ bool CreateList(SqList &L, int n)
     }
     return true;
 }
+//输出功能函数 按位置从小到大输出顺序表所有元素
+void PrintList(SqList L)
+{
+    printf("当前顺序表所有元素:");
+    for (int i = 0; i<L.length; i++)
+    {
+        printf("%d ", L.data[i]);
+    }
+    printf("\n");
+}
 //插入函数 位置i插入数据 i及之后元素后移  1=<i<=length+1
 bool InsertList(SqList &L, int i, ElemType e)
 {
@@ -110,7 +120,30 @@ void Reverse(SqList &L)
         }
 }
 //奇偶分开并排序
-void SplitSort(SqList &L)
+void SplitSort(SqList &l){
+
+    int oddIndex = 0;
+    int evenIndex = l.length-1;
+    while (oddIndex<evenIndex){
+        while (l.data[oddIndex]%2==1)oddIndex++;
+        while (l.data[evenIndex]%2==0)evenIndex--;
+        if(l.data[oddIndex]%2==0&&l.data[evenIndex]%2==1&&oddIndex<evenIndex){
+            int temp = l.data[oddIndex];
+            l.data[oddIndex] = l.data[evenIndex];
+            l.data[evenIndex] = temp;
+            oddIndex++;
+            evenIndex--;
+        }
+    }
+    oddIndex--;
+    evenIndex++;
+    PrintList(l);
+    sort(l.data,l.data+oddIndex+1);
+    PrintList(l);
+    sort(l.data+evenIndex,l.data+l.length);
+    PrintList(l);
+}
+void SplitSort3(SqList &L)
 {
     int Even = 0;
     int Odd = L.length - 1;
@@ -196,16 +229,7 @@ void ClearList(SqList &L) {
     L.length = 0;
 }
 //********************************功能函数*****************************************//
-//输出功能函数 按位置从小到大输出顺序表所有元素
-void PrintList(SqList L)
-{
-    printf("当前顺序表所有元素:");
-    for (int i = 0; i<L.length; i++)
-    {
-        printf("%d ", L.data[i]);
-    }
-    printf("\n");
-}
+
 //创建顺序表函数
 void Create(SqList &L)
 {
@@ -321,6 +345,13 @@ int main()
             default:printf("输入错误！！！\n");
         }
     }
+//    int t [6]={1,6,3,4,5,2};
+//    int  t[6] ={11,3,13,7,9,1};
+//   int   t = {2,4,6,8,10,12};
+//    for (int i = 0; i < 6; ++i) {
+//        L.data[i] =t[i];
+//    }
+//    L.length=6;
     return 0;
 }
 
